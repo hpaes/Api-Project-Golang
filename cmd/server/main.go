@@ -31,6 +31,10 @@ func main() {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 	router.Use(middleware.Timeout(300 * time.Millisecond))
+
 	router.Post("/products", productHandler.CreateProduct)
+	router.Get("/products/{id}", productHandler.GetProduct)
+	router.Put("/products/{id}", productHandler.UpdateProduct)
+
 	http.ListenAndServe(":8080", router)
 }
