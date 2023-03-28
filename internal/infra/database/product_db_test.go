@@ -18,7 +18,7 @@ func TestGivenValidParamsShouldInsertProductInDb(t *testing.T) {
 	db.AutoMigrate(&entity.Product{})
 
 	productRepo := NewProductRepository(db)
-	product, err := entity.NewProduct("Product 1", "Description 1", 10.0, 2)
+	product, err := entity.NewProduct("Product 1", "Description 1", 10.0)
 	assert.NoError(t, err)
 
 	err = productRepo.Create(product)
@@ -31,7 +31,6 @@ func TestGivenValidParamsShouldInsertProductInDb(t *testing.T) {
 	assert.Equal(t, product.Name, productFound.Name)
 	assert.Equal(t, product.Description, productFound.Description)
 	assert.Equal(t, product.Price, productFound.Price)
-	assert.Equal(t, product.Quantity, productFound.Quantity)
 }
 
 func TestGivenValidIdShouldFindProductFindByID(t *testing.T) {
@@ -40,7 +39,7 @@ func TestGivenValidIdShouldFindProductFindByID(t *testing.T) {
 	db.AutoMigrate(&entity.Product{})
 
 	productRepo := NewProductRepository(db)
-	product, err := entity.NewProduct("Product 1", "Description 1", 10.0, 2)
+	product, err := entity.NewProduct("Product 1", "Description 1", 10.0)
 	assert.NoError(t, err)
 
 	err = productRepo.Create(product)
@@ -52,7 +51,6 @@ func TestGivenValidIdShouldFindProductFindByID(t *testing.T) {
 	assert.Equal(t, product.Name, productFound.Name)
 	assert.Equal(t, product.Description, productFound.Description)
 	assert.Equal(t, product.Price, productFound.Price)
-	assert.Equal(t, product.Quantity, productFound.Quantity)
 }
 
 func TestGivenValidParamsShouldUpdateProduct(t *testing.T) {
@@ -61,7 +59,7 @@ func TestGivenValidParamsShouldUpdateProduct(t *testing.T) {
 	db.AutoMigrate(&entity.Product{})
 
 	productRepo := NewProductRepository(db)
-	product, err := entity.NewProduct("Product 1", "Description 1", 10.0, 2)
+	product, err := entity.NewProduct("Product 1", "Description 1", 10.0)
 	assert.NoError(t, err)
 
 	err = productRepo.Create(product)
@@ -75,7 +73,6 @@ func TestGivenValidParamsShouldUpdateProduct(t *testing.T) {
 		Name:        "Product 2",
 		Description: "Description 2",
 		Price:       20.0,
-		Quantity:    3,
 	}
 
 	err = productRepo.Update(productToUpdate)
@@ -87,7 +84,6 @@ func TestGivenValidParamsShouldUpdateProduct(t *testing.T) {
 	assert.Equal(t, productFound.Name, productToUpdate.Name)
 	assert.Equal(t, productFound.Description, productToUpdate.Description)
 	assert.Equal(t, productFound.Price, productToUpdate.Price)
-	assert.Equal(t, productFound.Quantity, productToUpdate.Quantity)
 }
 
 func TestGivenValidIdShouldDeleteProduct(t *testing.T) {
@@ -96,7 +92,7 @@ func TestGivenValidIdShouldDeleteProduct(t *testing.T) {
 	db.AutoMigrate(&entity.Product{})
 
 	productRepo := NewProductRepository(db)
-	product, err := entity.NewProduct("Product 1", "Description 1", 10.0, 2)
+	product, err := entity.NewProduct("Product 1", "Description 1", 10.0)
 	assert.NoError(t, err)
 
 	err = productRepo.Create(product)
@@ -118,7 +114,7 @@ func TestGivenNoParametersShouldFindAllProducts(t *testing.T) {
 	productRepo := NewProductRepository(db)
 
 	for i := 0; i < 10; i++ {
-		product, err := entity.NewProduct(fmt.Sprintf("Product %d", i), fmt.Sprintf("Description %d", i), rand.Float64()*100, i+1)
+		product, err := entity.NewProduct(fmt.Sprintf("Product %d", i), fmt.Sprintf("Description %d", i), rand.Float64()*100)
 		assert.NoError(t, err)
 		err = productRepo.Create(product)
 		assert.NoError(t, err)
@@ -137,7 +133,7 @@ func TestGivenPageLimitAndSortShouldFindOnlyTheLimitOfProducts(t *testing.T) {
 	productRepo := NewProductRepository(db)
 
 	for i := 1; i < 24; i++ {
-		product, err := entity.NewProduct(fmt.Sprintf("Product %d", i), fmt.Sprintf("Description %d", i), rand.Float64()*100, i)
+		product, err := entity.NewProduct(fmt.Sprintf("Product %d", i), fmt.Sprintf("Description %d", i), rand.Float64()*100)
 		assert.NoError(t, err)
 		err = productRepo.Create(product)
 		assert.NoError(t, err)
