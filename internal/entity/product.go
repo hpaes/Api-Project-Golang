@@ -1,9 +1,10 @@
 package entity
 
 import (
-	"apis/pkg/entity"
 	"errors"
 	"time"
+
+	"github.com/hpaes/api-project-golang/pkg/entity"
 )
 
 var (

@@ -1,8 +1,9 @@
 package database
 
 import (
-	"apis/internal/entity"
 	"errors"
+
+	"github.com/hpaes/api-project-golang/internal/entity"
 
 	"gorm.io/gorm"
 )

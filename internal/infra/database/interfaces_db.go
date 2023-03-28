@@ -1,6 +1,6 @@
 package database
 
-import "apis/internal/entity"
+import "github.com/hpaes/api-project-golang/internal/entity"
 
 type UserInterface interface {
 	Create(user *entity.User) error

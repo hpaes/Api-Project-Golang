@@ -1,4 +1,4 @@
-module apis
+module github.com/hpaes/api-project-golang
 
 go 1.20
 

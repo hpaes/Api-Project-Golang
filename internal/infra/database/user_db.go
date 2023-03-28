@@ -1,7 +1,7 @@
 package database
 
 import (
-	"apis/internal/entity"
+	"github.com/hpaes/api-project-golang/internal/entity"
 
 	"gorm.io/gorm"
 )

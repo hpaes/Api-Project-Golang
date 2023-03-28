@@ -1,10 +1,11 @@
 package database
 
 import (
-	"apis/internal/entity"
 	"fmt"
 	"math/rand"
 	"testing"
+
+	"github.com/hpaes/api-project-golang/internal/entity"
 
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/sqlite"

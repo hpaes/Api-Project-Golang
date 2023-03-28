@@ -1,9 +1,10 @@
 package entity
 
 import (
-	"apis/pkg/entity"
 	"errors"
 	"log"
+
+	"github.com/hpaes/api-project-golang/pkg/entity"
 
 	"golang.org/x/crypto/bcrypt"
 )
