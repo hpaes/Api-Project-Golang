@@ -8,15 +8,15 @@ import (
 )
 
 type config struct {
-	DBDriver       string `mapstructure:"DB_DRIVER"`
-	DBHost         string `mapstructure:"DB_HOST"`
-	DBPort         string `mapstructure:"DB_PORT"`
-	DBUser         string `mapstructure:"DB_USER"`
-	DBPassword     string `mapstructure:"DB_PASSWORD"`
-	WebServerPort  string `mapstructure:"WEB_SERVER_PORT"`
-	JWTSecret      string `mapsctructure:"JWT_SECRET"`
-	JwtExperiresIn int    `mapstructure:"JWT_EXPIRES_IN"`
-	TokenAuth      *jwtauth.JWTAuth
+	DBDriver      string `mapstructure:"DB_DRIVER"`
+	DBHost        string `mapstructure:"DB_HOST"`
+	DBPort        string `mapstructure:"DB_PORT"`
+	DBUser        string `mapstructure:"DB_USER"`
+	DBPassword    string `mapstructure:"DB_PASSWORD"`
+	WebServerPort string `mapstructure:"WEB_SERVER_PORT"`
+	JWTSecret     string `mapstructure:"JWT_SECRET"`
+	JwtExpiresIn  int    `mapstructure:"JWT_EXPIRES_IN"`
+	TokenAuth     *jwtauth.JWTAuth
 }
 
 func LoadConfig() *config {

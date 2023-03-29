@@ -36,6 +36,11 @@ func NewUser(name, email, password string) (*User, error) {
 	}, nil
 }
 
+func (u *User) ValidatePasswordHash(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	return err == nil
+}
+
 func validateNameAndEmail(name, email string) error {
 	if name == "" {
 		return errors.New("name cannot be empty")
@@ -59,15 +64,6 @@ func generatePassword(password string) (string, error) {
 		log.Fatal(err)
 	}
 	return string(hash), nil
-}
-
-func (u *User) ValidatePasswordHash(password string) (bool, error) {
-	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
-	if err != nil {
-		return false, errors.New("invalid credentials")
-	}
-
-	return true, nil
 }
 
 func validatePassword(password string) (string, error) {

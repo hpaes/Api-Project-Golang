@@ -12,17 +12,15 @@ func TestGivenValidParamShouldCreateUser(t *testing.T) {
 	assert.Equal(t, "John Doe", user.Name)
 	assert.Equal(t, "john@email.com", user.Email)
 
-	isValid, err := user.ValidatePasswordHash("passWord123$")
+	isValid := user.ValidatePasswordHash("passWord123$")
 	assert.Equal(t, true, isValid)
-	assert.Nil(t, err)
 	assert.NotEqual(t, "passWord123$", user.Password)
 }
 
 func TestGivenInvalidPasswordCredentialShouldReturnError(t *testing.T) {
 	user, err := NewUser("John Doe", "john@email.com", "passWord123$")
 	assert.Nil(t, err)
-	isValid, err := user.ValidatePasswordHash("")
-	assert.EqualError(t, err, "invalid credentials")
+	isValid := user.ValidatePasswordHash("")
 	assert.Equal(t, false, isValid)
 }
 
