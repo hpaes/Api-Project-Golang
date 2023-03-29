@@ -2,7 +2,26 @@ POST http://localhost:8080/products
 Content-Type: application/json
 
 {
-  "name": "My Product 2",
-  "description": "My Product 2 Description",
-  "price": 154.45
+  "name": "My Product 5",
+  "description": "My Product 5 Description",
+  "price": 230.00
 }
+
+
+GET http://localhost:8080/products/d406a511-5209-4fec-aaaf-aa3f3e8bef6f
+
+GET http://localhost:8080/products
+
+
+PUT http://localhost:8080/products/d406a511-5209-4fec-aaaf-aa3f3e8bef6f
+Content-Type: application/json
+
+{
+  "id": "d406a511-5209-4fec-aaaf-aa3f3e8bef6f",
+  "name": "My Product 6",
+  "description": "My Product 6 Description",
+  "price": 250.00
+}
+
+
+DELETE http://localhost:8080/products/d406a511-5209-4fec-aaaf-aa3f3e8bef6f
