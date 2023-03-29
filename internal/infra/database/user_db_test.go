@@ -16,7 +16,7 @@ func TestGivenValidParamsShouldInsertUserInDb(t *testing.T) {
 	db.AutoMigrate(&entity.User{})
 
 	userRepo := NewUserRepository(db)
-	user, err := entity.NewUser("John Doe", "john@email.com", "123456")
+	user, err := entity.NewUser("John Doe", "john@email.com", "Passw0rd#")
 	assert.NoError(t, err)
 
 	err = userRepo.Create(user)
@@ -37,7 +37,7 @@ func TestGivenValidEmailShouldReturnUserFindByEmail(t *testing.T) {
 	db.AutoMigrate(&entity.User{})
 
 	userRepo := NewUserRepository(db)
-	user, err := entity.NewUser("John Doe", "john@email.com", "123456")
+	user, err := entity.NewUser("John Doe", "john@email.com", "passWord123#")
 	assert.NoError(t, err)
 
 	err = userRepo.Create(user)
@@ -51,13 +51,13 @@ func TestGivenValidEmailShouldReturnUserFindByEmail(t *testing.T) {
 	assert.NotNil(t, userFound.Password)
 }
 
-func TestGivenInvalidEmailShouldReturnUserFindByEmail(t *testing.T) {
+func TestGivenNonExistingEmailShouldNotReturnUser(t *testing.T) {
 	db, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
 	assert.NoError(t, err)
 	db.AutoMigrate(&entity.User{})
 
 	userRepo := NewUserRepository(db)
-	user, err := entity.NewUser("John Doe", "john@email.com", "123456")
+	user, err := entity.NewUser("John Doe", "john@email.com", "passWord123#")
 	assert.NoError(t, err)
 
 	err = userRepo.Create(user)
