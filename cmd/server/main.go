@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/jwtauth/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -29,24 +30,30 @@ func main() {
 	productHandler := handlers.NewProductHandler(productDb)
 
 	userDb := database.NewUserRepository(db)
-	userHandler := handlers.NewUserHandler(userDb, config.TokenAuth, config.JwtExpiresIn)
+	userHandler := handlers.NewUserHandler(userDb)
 
 	router := chi.NewRouter()
+	router.Use(middleware.Heartbeat("/"))
 	router.Use(middleware.Logger)
 	router.Use(middleware.Timeout(300 * time.Millisecond))
+	router.Use(middleware.Recoverer)
+	router.Use(middleware.WithValue("jwt", config.TokenAuth))
+	router.Use(middleware.WithValue("JwtExpiresIn", config.JwtExpiresIn))
 
-	router.Route("/products", func(r chi.Router) {
-		router.Post("/", productHandler.CreateProduct)
-		router.Get("/{id}", productHandler.GetProduct)
-		router.Get("/", productHandler.GetProducts)
-		router.Put("/{id}", productHandler.UpdateProduct)
-		router.Delete("/{id}", productHandler.DeleteProduct)
+	router.Route("/users", func(router chi.Router) {
+		router.Post("/", userHandler.CreateUser)
+		router.Post("/generate_token", userHandler.GetJwtInput)
+
 	})
 
-	router.Route("/users", func(r chi.Router) {
-		router.Post("/users", userHandler.CreateUser)
-		router.Post("/users/generate_token", userHandler.GetJwtInput)
-
+	router.Route("/products", func(router chi.Router) {
+		router.Use(jwtauth.Verifier(config.TokenAuth))
+		router.Use(jwtauth.Authenticator)
+		router.Get("/", productHandler.GetProducts)
+		router.Post("/", productHandler.CreateProduct)
+		router.Get("/{id}", productHandler.GetProduct)
+		router.Put("/{id}", productHandler.UpdateProduct)
+		router.Delete("/{id}", productHandler.DeleteProduct)
 	})
 
 	http.ListenAndServe(":8080", router)

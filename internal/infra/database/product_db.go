@@ -33,8 +33,10 @@ func (p *ProductRepository) FindById(id string) (*entity.Product, error) {
 func (p *ProductRepository) FindAll(page, limit int, sort string) ([]entity.Product, error) {
 	var products []entity.Product
 	var err error
-	if sort != "" && sort != "asc" && sort != "desc" {
+	if sort != "" && sort != "desc" {
 		sort = "asc"
+	} else {
+		sort = "desc"
 	}
 
 	if page != 0 && limit != 0 {
